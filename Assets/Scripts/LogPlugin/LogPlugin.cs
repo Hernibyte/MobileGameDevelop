@@ -32,12 +32,17 @@ public class LogPlugin : MonoBehaviour {
         }
     }
 
-    void sendLog(string msj)
+    public void generateFile()
+    {
+        pluginInstance.Call("generatePublicFile");
+    }
+
+    public void sendLog(int msj)
     {
         pluginInstance.Call("sendLog", msj);
     }
 
-    string getLog()
+    public string getLog()
     {
         return pluginInstance.Call<string>("getAllLogs");
     }
