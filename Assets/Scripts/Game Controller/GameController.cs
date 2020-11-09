@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public LogPlugin logPlugin;
     public GameObject hazard;
     public Vector3 spawnValues;
     public int hazardCount;
@@ -17,8 +16,8 @@ public class GameController : MonoBehaviour
     private int score;
     public Text scoreText;
 
-    private bool list;
-    public Text listText;
+    private bool scoreFull;
+    public Text scoreTextFull;
 
     public Text gameOverText;
     private bool gameOver;
@@ -35,12 +34,11 @@ public class GameController : MonoBehaviour
         gameOverText.gameObject.SetActive(false);
         backToMenu = false;
         backToMenuButton.gameObject.SetActive(false);
-        list = false;
-        listText.gameObject.SetActive(false);
+        scoreFull = false;
+        scoreTextFull.gameObject.SetActive(false);
         score = 0;
         UpdateScore();
         StartCoroutine(SpawnWaves());
-        if (logPlugin != null) logPlugin.generateFile();
     }
 
     public void UpdateScene()
@@ -72,10 +70,8 @@ public class GameController : MonoBehaviour
                 restart = true;
                 backToMenuButton.gameObject.SetActive(true);
                 backToMenu = true;
-                listText.gameObject.SetActive(true);
-                list = true;
-
-                if (logPlugin != null) UpdateList();
+                scoreTextFull.gameObject.SetActive(true);
+                scoreFull = true;
 
                 break;
             }
@@ -91,17 +87,12 @@ public class GameController : MonoBehaviour
     void UpdateScore()
     {
         scoreText.text = "Score: " + score;
+        scoreTextFull.text = "Score: " + score;
     }
 
     public void GameOver()
     {
         gameOverText.gameObject.SetActive(true);
         gameOver = true;
-    }
-
-    public void UpdateList()
-    {
-        logPlugin.sendLog(score);
-        listText.text = logPlugin.getLog();
     }
 }

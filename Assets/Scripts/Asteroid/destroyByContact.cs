@@ -18,6 +18,9 @@ public class destroyByContact : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             gameController.GameOver();
+            #if UNITY_ANDROID
+            Handheld.Vibrate();
+            #endif
         }
         Destroy(other.gameObject);
         Destroy(gameObject);
