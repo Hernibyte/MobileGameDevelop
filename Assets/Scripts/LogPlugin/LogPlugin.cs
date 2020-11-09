@@ -34,16 +34,22 @@ public class LogPlugin : MonoBehaviour {
 
     public void generateFile()
     {
+#if UNITY_ANDROID
         pluginInstance.Call("generatePublicFile");
+#endif
     }
 
     public void sendLog(int msj)
     {
+#if UNITY_ANDROID
         pluginInstance.Call("sendLog", msj);
+#endif
     }
 
     public string getLog()
     {
+#if UNITY_ANDROID
         return pluginInstance.Call<string>("getAllLogs");
+#endif
     }
 }

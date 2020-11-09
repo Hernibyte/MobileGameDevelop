@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    private LogPlugin logPlugin;
+    public LogPlugin logPlugin;
     public GameObject hazard;
     public Vector3 spawnValues;
     public int hazardCount;
@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
     private int score;
     public Text scoreText;
 
-    public bool list;
+    private bool list;
     public Text listText;
 
     public Text gameOverText;
@@ -40,7 +40,7 @@ public class GameController : MonoBehaviour
         score = 0;
         UpdateScore();
         StartCoroutine(SpawnWaves());
-        logPlugin.generateFile();
+        if (logPlugin != null) logPlugin.generateFile();
     }
 
     public void UpdateScene()
@@ -75,7 +75,7 @@ public class GameController : MonoBehaviour
                 listText.gameObject.SetActive(true);
                 list = true;
 
-                UpdateList();
+                if (logPlugin != null) UpdateList();
 
                 break;
             }
@@ -102,6 +102,6 @@ public class GameController : MonoBehaviour
     public void UpdateList()
     {
         logPlugin.sendLog(score);
-        listText.text = "" + logPlugin.getLog();
+        listText.text = logPlugin.getLog();
     }
 }
