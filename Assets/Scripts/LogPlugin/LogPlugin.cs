@@ -36,6 +36,7 @@ public class LogPlugin : MonoBehaviour {
     {
         pluginInstance.Call("sendLog", msj);
     }
+
     string getLog()
     {
         return pluginInstance.Call<string>("getAllLogs");
