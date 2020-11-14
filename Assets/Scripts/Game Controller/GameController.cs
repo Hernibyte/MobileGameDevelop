@@ -6,12 +6,15 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public LogPlugin logger;
     public GameObject hazard;
     public Vector3 spawnValues;
     public int hazardCount;
     public float spawnWait;
     public float startWait;
     public float waveWait;
+
+    private const int gameTime = 10;
 
     private int score;
     public Text scoreText;
@@ -26,8 +29,25 @@ public class GameController : MonoBehaviour
     public Button backToMenuButton;
     private bool backToMenu;
 
+    public Image stickFond;
+    public Joystick stick;
+
+    public Button clickButton;
+
+    public Text timeText;
+    private int timeReverse;
+    private float timeTimetime;
+
+    private float timerTime;
+
     void Start()
     {
+        if (logger != null)
+        {
+            Debug.Log("genere el archivo");
+            //logger.generateFile();
+        }
+
         restart = false;
         restartButton.gameObject.SetActive(false);
         gameOver = false;
@@ -37,6 +57,12 @@ public class GameController : MonoBehaviour
         scoreFull = false;
         scoreTextFull.gameObject.SetActive(false);
         score = 0;
+        stickFond.gameObject.SetActive(true);
+        stick.gameObject.SetActive(true);
+        clickButton.gameObject.SetActive(true);
+        timeText.gameObject.SetActive(true);
+        timeReverse = gameTime;
+
         UpdateScore();
         StartCoroutine(SpawnWaves());
     }
@@ -49,6 +75,22 @@ public class GameController : MonoBehaviour
     public void UpdateMenu()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    private void Update()
+    {
+        timerTime += Time.deltaTime;
+        timeTimetime += Time.deltaTime;
+
+        if (timeTimetime >= 1.0f)
+        {
+            timeTimetime = 0.0f;
+
+            if (timeReverse > 0) timeReverse--;
+            else timeReverse = 0;
+        }
+        
+        timeText.text = "time: " + timeReverse;
     }
 
     IEnumerator SpawnWaves()
@@ -64,7 +106,7 @@ public class GameController : MonoBehaviour
             }
             yield return new WaitForSeconds(waveWait);
 
-            if (gameOver)
+            if (gameOver || timerTime >= gameTime)
             {
                 restartButton.gameObject.SetActive(true);
                 restart = true;
@@ -72,6 +114,17 @@ public class GameController : MonoBehaviour
                 backToMenu = true;
                 scoreTextFull.gameObject.SetActive(true);
                 scoreFull = true;
+                stickFond.gameObject.SetActive(false);
+                stick.gameObject.SetActive(false);
+                clickButton.gameObject.SetActive(false);
+                timeText.gameObject.SetActive(false);
+
+
+                if (logger != null)
+                {
+                    Debug.Log("mande el score");
+                    //logger.sendLog(score);
+                }
 
                 break;
             }

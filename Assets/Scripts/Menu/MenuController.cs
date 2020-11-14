@@ -14,4 +14,14 @@ public class MenuController : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void StartMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void StartHS()
+    {
+        SceneManager.LoadScene("highScore");
+    }
 }
