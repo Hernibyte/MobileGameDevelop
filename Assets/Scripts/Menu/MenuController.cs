@@ -24,4 +24,9 @@ public class MenuController : MonoBehaviour
     {
         SceneManager.LoadScene("highScore");
     }
+
+    public void StartCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
 }
