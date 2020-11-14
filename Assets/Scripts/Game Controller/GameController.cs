@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
     public float startWait;
     public float waveWait;
 
-    private const int gameTime = 10;
+    private const int gameTime = 60;
 
     private int score;
     public Text scoreText;
